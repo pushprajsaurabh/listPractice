@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="   Mail Query to Author      "
+            android:text="Mail Query to Author"
             android:id="@+id/button3"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -56,11 +56,28 @@
 
     </LinearLayout>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_layout"
+        android:id="@+id/rating"
+        android:hint="Enter the App Rating"
+        android:inputType="number"
+        android:maxLength="2"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox1"
+        android:layout_alignBaseline="@id/rating"
+        android:layout_alignParentRight="true"
+        android:text="Check" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_below="@+id/button_layout"
+        android:layout_below="@+id/rating"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

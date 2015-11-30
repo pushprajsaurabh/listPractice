@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,9 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements TextWatcher {
     MyCustomAdapter myAdapter;
     int counter = 0;
+    EditText rating;
+    CheckBox checkMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,8 @@ public class MainActivity extends Activity {
         myAdapter = new MyCustomAdapter(this);
         ListView myView = (ListView)findViewById(R.id.listView);
         myView.setAdapter(myAdapter);
+        rating = (EditText) findViewById(R.id.rating);
+        rating.addTextChangedListener(this);
         Button appButton = (Button)findViewById(R.id.button2);
 
         View.OnClickListener appInitializer = new View.OnClickListener() {
@@ -87,6 +95,22 @@ public class MainActivity extends Activity {
         };
         sendPic.setOnClickListener(sendImage);
 
+        checkMe = (CheckBox)findViewById(R.id.checkbox1);
+        View.OnClickListener cb = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (checkMe.isChecked())
+                    {
+                        Toast.makeText(MainActivity.this, "You Checked Me!!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "You Unchecked Me!!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        };
+        checkMe.setOnClickListener(cb);
+
     }
 
     @Override
@@ -108,6 +132,26 @@ public class MainActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
         counter = savedInstanceState.getInt("counter");
         Log.d("PRS", "Instance State restored successfully. Counter is at - " + counter);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        Integer value = Integer.parseInt(s.toString());
+        if (value > 10)
+        {
+            s.replace(0, s.length(), "10");
+            Toast.makeText(this, "Value cannot be greater than 10", Toast.LENGTH_LONG).show();
+        }
     }
 
     public class MyCustomAdapter extends BaseAdapter {
